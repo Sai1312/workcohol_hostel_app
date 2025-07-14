@@ -39,13 +39,13 @@ class VisitorSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = VisitorItem
-        field = '__all__'
+        fields = '__all__'
         
         
 class StaffNestedSerializer(serializers.ModelSerializer):
     class Meta:
         model = StaffItem
-        field = ['staffid', 'name']
+        fields = ['staffid', 'name']
 
 
 class OutPassSerializer(serializers.ModelSerializer):
@@ -54,22 +54,19 @@ class OutPassSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = OutPassItem
-        field = '__all__'
+        fields = '__all__'
         
         
 class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = StaffItem
-        field = '__all__'
+        fields = '__all__'
 
-class UserSerializer(serializers.ModelSerializer):
-    
-    password = serializers.CharField(write_only=True)   
-    
-    class Meta:
-        model = User
-        fields=['username', 'password', 'email']
-        
-    def create(self, validated_data):
-        user= User.objects.create_user(username=validated_data['username'], password=validated_data['password'],email=validated_data.get('email', ''))
-        return user
+
+class LogSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+class SetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(min_length=4, max_length=128)

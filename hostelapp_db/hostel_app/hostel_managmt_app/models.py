@@ -37,8 +37,7 @@ class HostelItem(models.Model):
     totalflr = models.IntegerField()
     totalrooms = models.IntegerField()
     totalstaff = models.IntegerField()
-    hostelcontact = models.IntegerField()
-    
+    hostelcontact = models.CharField(max_length=20, null=True, blank=True)    
     def __str__(self):
         return f"{self.name or 'Unnamed Hostel'} (ID: {self.hostelid})"
 
@@ -93,29 +92,19 @@ class StaffItem(models.Model):
     staffid = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     role = models.CharField(max_length=50)
-    contactnum = models.CharField()
+    contactnum = models.IntegerField()
     email = models.EmailField()
     salary = models.IntegerField()
-    joindate = models.IntegerField()
+    joindate = models.DateField()
     
     def __str__(self):
         return f"{self.name} role {self.role}"
-    
-    
-# class StudentLogItem(models.Model):
-#     username = models.CharField()
-#     std = models.ForeignKey(StudentItem, on_delete=models.CASCADE)
-#     password = models.CharField()
-    
-#     def __str__(self):
-#         return f"Std User {self.username}({self.std.stdid}-{self.std.name}, pwd {self.password})"
-    
 
-# class StaffLogItem(models.Model):
-#     username = models.CharField()
-#     Saff = models.ForeignKey('StaffItem', on_delete=models.SET_NULL, null=True)
-#     password = models.CharField(null=False, black=False)
-    
-#     def __str__(self):
-#         return f"Staff User {self.username}({self.staff.staffid}-{self.staff.name}, pwd {self.password})"
+class StudentLog(models.Model):
+    email = models.ForeignKey(StudentItem, on_delete=models.CASCADE)
+    password = models.CharField(max_length=128, null=True, blank=True)
 
+
+class StaffLog(models.Model):
+    email = models.ForeignKey(StaffItem, on_delete=models.CASCADE)
+    password = models.CharField(max_length=128, null=True, blank=True)

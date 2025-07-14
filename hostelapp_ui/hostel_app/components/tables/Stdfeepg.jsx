@@ -1,15 +1,17 @@
-import axios from "axios";  
+import api, { endpoints } from "@/lib/api";
 import React, { useEffect, useState } from "react";
 
 const Stdfeepg = () => {
   const [fees, setFees] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/hostelfees/")
-      .then((res) => setFees(res.data))
-      .catch((err) => console.error(err));
+    const fetchtbl = async () => {
+      const res = await api.get(endpoints.hostelFees);
+      setFees(res.data);
+    }
+    fetchtbl();
   }, []);
+
 
   return (
     <div>
