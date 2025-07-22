@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (HostelFeeListCreateView, HostelListCreateView, StudentListCreateView, RoomListCreateView, HostelFeeDetailEdit, StudentDetailEdit, LogView,
-                    SetPasswordView, VisitorListCreateView, VisitorDetailEdit, OutPassListCreateView, OutPassDetailEdit, StaffListCreateView, StaffDetailEdit)
+                    SetPasswordView, VisitorListCreateView, VisitorDetailEdit, OutPassListCreateView, OutPassDetailEdit, StaffListCreateView, StaffDetailEdit, TokenView)
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -11,6 +11,9 @@ urlpatterns = [
     # Authentication
     path('login/', LogView.as_view(), name='login'),  
     path('passwordset/', SetPasswordView.as_view(), name='password-set'),
+    
+    # Token Request from cookie
+    path('access_token/', TokenView.as_view(), name= 'token'),
     
     path('hostelfees/', HostelFeeListCreateView.as_view(), name='hostel-fee-list'),
     path('hostelfees/<int:pk>/', HostelFeeDetailEdit.as_view(), name='hostelfee-update'),

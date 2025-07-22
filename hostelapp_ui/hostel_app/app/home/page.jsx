@@ -1,29 +1,61 @@
 "use client";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Stdpg from "@/components/tables/Stdpg";
 import Stdfeepg from "@/components/tables/Stdfeepg";
+import Outpasspg from "@/components/tables/Outpasspg";
+import api, { endpoints } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 const Homepg = () => {
+  // const router = useRouter();
+
+  //  useEffect(() => {
+  //     auth();
+  //   }, []);
+
+  // const auth = async () => {
+  //     try {
+  //       const res = await api.get(endpoints.Token);
+  //       console.log("User is authenticated", res.data);
+  //     } catch(err) {
+  //       console.log("error", err);
+  //       console.error("Not authenticated", err);
+  //       router.push("/login");
+  //       console.log("user no log")
+  //     }
+  //   };
+
   const [showTbl1, setShowTbl1] = useState(false);
   const studtBtn = () => {
     setShowTbl1(true);
     setShowTbl2(false);
+    setShowtbl3(false);
+    setShowtbl4(false);
   };
 
   const [showTbl2, setShowTbl2] = useState(false);
   const stdfeeBtn = () => {
     setShowTbl2(true);
     setShowTbl1(false);
+    setShowtbl3(false);
+    setShowtbl4(false);
   };
 
   const [showtble3, setShowtbl3] = useState(false);
   const visitorBtn = () => {
     setShowtbl3(true);
-    setShowTbl1(true);
-    setShowTbl2(true);
-  }
+    setShowTbl1(false);
+    setShowTbl2(false);
+    setShowtbl4(false);
+  };
 
+  const [showtble4, setShowtbl4] = useState(false);
+  const outpassBtn = () => {
+    setShowtbl4(true);
+    setShowTbl1(false);
+    setShowTbl2(false);
+    setShowtbl3(false);
+  };
 
   return (
     <div>
@@ -43,7 +75,7 @@ const Homepg = () => {
               onClick={studtBtn}
               className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-700 transition rounded text-left"
             >
-              Student's Details 
+              Student's Details
             </button>
             <button
               onClick={stdfeeBtn}
@@ -57,6 +89,12 @@ const Homepg = () => {
             >
               Visitor Details
             </button>
+            <button
+              onClick={outpassBtn}
+              className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-700 transition rounded text-left"
+            >
+              OutPass Details
+            </button>
           </aside>
           {/* Content */}
           <main className="flex-1 p-6 overflow-y-auto space-y-6">
@@ -64,8 +102,7 @@ const Homepg = () => {
             {showTbl1 && (
               <section className="p-6 ">
                 <div className="table_1">
-                  <Stdpg/>
-                  
+                  <Stdpg />
                 </div>
               </section>
             )}
@@ -74,7 +111,16 @@ const Homepg = () => {
             {showTbl2 && (
               <section className="p-6 ">
                 <div className="table_2">
-                  <Stdfeepg/>
+                  <Stdfeepg />
+                </div>
+              </section>
+            )}
+
+            {/* Section 3 */}
+            {showtble3 && (
+              <section className="p-6 ">
+                <div className="table_2">
+                  <Outpasspg />
                 </div>
               </section>
             )}

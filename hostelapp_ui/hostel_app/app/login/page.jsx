@@ -7,6 +7,7 @@ const Logpg = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newemail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,14 +20,17 @@ const Logpg = () => {
     setLoading(true);
 
     try {
+      console.log("Logging in with", email, password);
       const res = await api.post(endpoints.LogIn, { email, password });
       const data = res.data;
+      console.log("Login response headers:", res.headers);
 
       setStatus(`Login successful. Role: ${data.role}`);
       setTimeout(() => router.push("/home"), 1000);
 
     } catch (err) {
-      console.error("Login error:", err);
+      // console.error("Login error:", err);
+      console.error("Login error:", err.response?.data || err);
       setStatus(err.response?.data?.error || "Login failed");
     } finally {
       setLoading(false);
@@ -49,6 +53,7 @@ const Logpg = () => {
         email,
         password: newPassword,
       });
+      console.log("Login response headers:", res.headers);
 
       console.log("Response from backend:", res.data);
       console.log("Success:", res.data);
@@ -85,14 +90,16 @@ const Logpg = () => {
                 type="email"
                 placeholder="E-mail"
                 required
-                // value={email}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 className="w-full border p-2 text-black rounded"
                 type="password"
                 placeholder="Password"
                 required
-                // value={password}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 type="submit"
@@ -122,8 +129,8 @@ const Logpg = () => {
                 type="email"
                 placeholder="E-mail"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={newemail}
+                onChange={(e) => setNewEmail(e.target.value)}
               />
               <input
                 className="border p-2 rounded w-full text-black"

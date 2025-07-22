@@ -20,7 +20,7 @@ class StudentItem(models.Model):
 
 class HostelFeeItem(models.Model):
     feeid = models.AutoField(primary_key=True)  
-    std = models.ForeignKey(StudentItem, on_delete=models.CASCADE)
+    std_id = models.ForeignKey(StudentItem, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     paymentdate = models.DateField()           
     duedate = models.DateField()              

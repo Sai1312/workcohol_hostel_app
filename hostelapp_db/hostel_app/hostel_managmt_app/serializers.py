@@ -15,7 +15,7 @@ class StudentNestedSerializer(serializers.ModelSerializer):
 
 
 class HostelFeeItemSerializer(serializers.ModelSerializer):
-    std = StudentNestedSerializer(read_only=True)
+    std_id = StudentNestedSerializer(read_only=True)
     
     class Meta:
         model = HostelFeeItem

@@ -110,32 +110,32 @@ Your project will now be live at http://127.0.0.1:8000/
 
 ###  Hostel Management App 
 
-| Method | Endpoint | Description |
-| -------- | ---------- | ------------- |
-| `GET` | `/api/hostelfees/` | List all entities *(requires token)* |
-| `GET` | `/api/hostels/` | List all entities *(requires token)* |
-| `GET` | `/api/students/` | List all entities *(requires token)* |
-| `GET` | `/api/rooms/` | List all entities *(requires token)* |
-| `GET` | `/api/hostelfees/<int:pk>/` | List particular entities *(requires token)* |
-| `GET` | `/api/hostels/<int:pk>/` | List particular entities *(requires token)* |
-| `GET` | `/api/students/<int:pk>/` | List particular entities *(requires token)* |
-| `GET` | `/api/rooms/<int:pk>/` | List particular entities *(requires token)* |
-| `POST` | `/api/hostelfees/` | Create new entities *(requires token)* |
-| `POST` | `/api/hostels/` | Create new entities *(requires token)* |
-| `POST` | `/api/students/` | Create new entities *(requires token)* |
-| `POST` | `/api/rooms/` | Create new entities *(requires token)* |
-| `PUT` | `/api/hostelfees/<int:pk>/` | Updates an existing resource completely *(requires token)* |
-| `PUT` | `/api/hostels/<int:pk>/` | Updates an existing resource completely *(requires token)* |
-| `PUT` | `/api/students/<int:pk>/` | Updates an existing resource completely *(requires token)* |
-| `PUT` | `/api/rooms/<int:pk>/` | Updates an existing resource completely *(requires token)* |
-| `PATCH` | `/api/hostelfees/<int:pk>/` | Updates an existing resource partially *(requires token)* |
-| `PATCH` | `/api/hostels/<int:pk>/` | Updates an existing resource partially *(requires token)* |
-| `PATCH` | `/api/students/<int:pk>/` | Updates an existing resource partially *(requires token)* |
-| `PATCH` | `/api/rooms/<int:pk>/` | Updates an existing resource partially *(requires token)* |
-| `DELETE` | `/api/hostelfees/<int:pk>/` | Removes a resource from the server *(requires token)* |
-| `DELETE` | `/api/hostels/<int:pk>/` | Removes a resource from the server *(requires token)* |
-| `DELETE` | `/api/students/<int:pk>/` | Removes a resource from the server *(requires token)* |
-| `DELETE` | `/api/rooms/<int:pk>/` | Removes a resource from the server *(requires token)* |
+| Method | Endpoint | Description | Success Response (2xx) | Error Response (5xx) |
+| -------- | ---------- | ------------- | ------------ | ------------ |
+| `GET` | `/api/hostelfees/` | List all entities *(requires token)* | 200 OK – List of all hostel fees | 500 Internal Server Error – Server failure |
+| `GET` | `/api/hostels/` | List all entities *(requires token)* | 200 OK – List of hostels | 500 Internal Server Error |
+| `GET` | `/api/students/` | List all entities *(requires token)* | 200 OK – List of hostels | 500 Internal Server Error |
+| `GET` | `/api/rooms/` | List all entities *(requires token)* | 200 OK – List of hostels | 500 Internal Server Error |
+| `GET` | `/api/hostelfees/<int:pk>/` | List particular entities *(requires token)* | 200 OK – List of hostels | 500 Internal Server Error |
+| `GET` | `/api/hostels/<int:pk>/` | List particular entities *(requires token)* | 200 OK – List of hostels | 500 Internal Server Error |
+| `GET` | `/api/students/<int:pk>/` | List particular entities *(requires token)* | 200 OK – List of hostels | 500 Internal Server Error |
+| `GET` | `/api/rooms/<int:pk>/` | List particular entities *(requires token)* | 200 OK – List of hostels | 500 Internal Server Error |
+| `POST` | `/api/hostelfees/` | Create new entities *(requires token)* | 201 Created – Object | 500 Internal Server Error |
+| `POST` | `/api/hostels/` | Create new entities *(requires token)* | 201 Created – JSON object | 500 Internal Server Error |
+| `POST` | `/api/students/` | Create new entities *(requires token)* | 201 Created – JSON object | 500 Internal Server Error |
+| `POST` | `/api/rooms/` | Create new entities *(requires token)* | 201 Created – JSON object | 500 Internal Server Error |
+| `PUT` | `/api/hostelfees/<int:pk>/` | Updates an existing resource completely *(requires token)* | 200 OK – Updated JSON object | 500 Internal Server Error |
+| `PUT` | `/api/hostels/<int:pk>/` | Updates an existing resource completely *(requires token)* | 200 OK – Updated JSON object | 500 Internal Server Error |
+| `PUT` | `/api/students/<int:pk>/` | Updates an existing resource completely *(requires token)* | 200 OK – Updated JSON object | 500 Internal Server Error |
+| `PUT` | `/api/rooms/<int:pk>/` | Updates an existing resource completely *(requires token)* | 200 OK – Updated JSON object | 500 Internal Server Error |
+| `PATCH` | `/api/hostelfees/<int:pk>/` | Updates an existing resource partially *(requires token)* | 200 OK – Partially updated JSON object | 500 Internal Server Error |
+| `PATCH` | `/api/hostels/<int:pk>/` | Updates an existing resource partially *(requires token)* | 200 OK – Partially updated JSON object | 500 Internal Server Error |
+| `PATCH` | `/api/students/<int:pk>/` | Updates an existing resource partially *(requires token)* | 200 OK – Partially updated JSON object | 500 Internal Server Error |
+| `PATCH` | `/api/rooms/<int:pk>/` | Updates an existing resource partially *(requires token)* | 200 OK – Partially updated JSON object | 500 Internal Server Error |
+| `DELETE` | `/api/hostelfees/<int:pk>/` | Removes a resource from the server *(requires token)* | 204 No Content – No body | 500 Internal Server Error |
+| `DELETE` | `/api/hostels/<int:pk>/` | Removes a resource from the server *(requires token)* | 204 No Content – No body | 500 Internal Server Error |
+| `DELETE` | `/api/students/<int:pk>/` | Removes a resource from the server *(requires token)* | 204 No Content – No body | 500 Internal Server Error |
+| `DELETE` | `/api/rooms/<int:pk>/` | Removes a resource from the server *(requires token)* | 204 No Content – No body | 500 Internal Server Error |
 
 All API endpoints are secured and require a valid JWT (JSON Web Token) to be included in the request header for authentication and authorization. Without a valid token, access to any operation—whether retrieving, creating, updating, or deleting resources—is restricted.
 
@@ -146,7 +146,7 @@ Authorization -> Select 'Bearer Token' -> Paste <your_token>
 ## HTTP Status Code
 
 ### 1xx – Informational
-| Code | Meaning | Description                        |
+| Code | Meaning | Description |
 | ---- | -------- |  ----------- |
 | 100  | Continue | Request received, continue process |
 | 101  | Switching Protocols | Server is switching protocols |

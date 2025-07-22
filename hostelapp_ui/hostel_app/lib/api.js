@@ -11,12 +11,14 @@ const api = axios.create({
 export default api;
 
 export const endpoints = {
-  LogIn: 'login/',
-  SetPassword: 'passwordset/',
+  LogIn: `login/`,
+  SetPassword: `passwordset/`,
+
+  Token: `access_token/`,
 
   hostel: 'hostel/',
 
-  students: 'students/',
+  students: `students/`,
   studentDetails: (id) => `students/${id}/`,
 
   hostelFees: 'hostelfees/',
