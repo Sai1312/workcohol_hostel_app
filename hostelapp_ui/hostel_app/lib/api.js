@@ -14,7 +14,9 @@ export const endpoints = {
   LogIn: `login/`,
   SetPassword: `passwordset/`,
 
-  Token: `access_token/`,
+  Token: 'access_token/',
+
+  Logout: `logout/`,
 
   hostel: 'hostel/',
 
@@ -23,6 +25,7 @@ export const endpoints = {
 
   hostelFees: 'hostelfees/',
   hostelFeeDetail: (id) => `hostelfees/${id}/`,
+  hostelFeeStdIdDetail: (id) => `hostelfeeid/${id}/`,
 
   rooms: 'rooms/',
   roomDetail: (id) => `rooms/${id}/`,

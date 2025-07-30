@@ -1,11 +1,12 @@
 import api, { endpoints } from "@/lib/api";
-import { useRouter } from "next/navigation";
+import authStore from "@/public/store/authStore";
 import React, { useEffect, useState } from "react";
 
 const Stdpg = () => {
   const [std, setStd] = useState([]);
   const [input, setInput] = useState(false);
-  const router = useRouter();
+
+  const { id, role, setUser, clearUser } = authStore();
 
   //selection
   const [selectedId, setSelectedId] = useState(null);
@@ -63,6 +64,7 @@ const Stdpg = () => {
   };
 
   const handleCancel = async () => {
+    setSelectedId(null);
     setStdData({
       name: "",
       gender: "",
@@ -140,31 +142,33 @@ const Stdpg = () => {
   return (
     <div>
       <h1 className="text-xl font-bold mb-4 text-black">Student Records</h1>
-      <div className="text-black flex flex-row justify-end gap-2 m-3">
-        <button
-          onClick={() => {
-            setInput(true);
-          }}
-          className="bg-green-300 text-white mt-4 px-4 py-2 rounded cursor-pointer"
-        >
-          Create
-        </button>
-        <button
-          onClick={() => {
-            hendleEdit();
-          }}
-          className="bg-green-300 text-white mt-4 px-4 py-2 rounded cursor-pointer"
-        >
-          Edit
-        </button>
-        <button
-          onClick={handleDelete}
-          className="bg-red-500 text-white mt-4 px-4 py-2 rounded cursor-pointer"
-        >
-          Delete
-        </button>
-      </div>
-      <table className="table-auto border text-black text-center">
+      {role == "Staff" && (
+        <div className="text-black flex flex-row justify-end gap-2 m-3">
+          <button
+            onClick={() => {
+              setInput(true);
+            }}
+            className="bg-green-300 text-white mt-4 px-4 py-2 rounded cursor-pointer"
+          >
+            Create
+          </button>
+          <button
+            onClick={() => {
+              hendleEdit();
+            }}
+            className="bg-green-300 text-white mt-4 px-4 py-2 rounded cursor-pointer"
+          >
+            Edit
+          </button>
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white mt-4 px-4 py-2 rounded cursor-pointer"
+          >
+            Delete
+          </button>
+        </div>
+      )}
+      <table className="min-w-full border border-gray-300 rounded-lg shadow-sm text-sm text-gray-800">
         <thead>
           <tr className="bg-blue-500">
             <th className="border px-4 py-2">Student ID</th>
@@ -173,10 +177,14 @@ const Stdpg = () => {
             <th className="border px-4 py-2">DOB</th>
             <th className="border px-4 py-2">Contact No</th>
             <th className="border px-4 py-2">E-Mail</th>
-            <th className="border px-4 py-2">Parent Name</th>
-            <th className="border px-4 py-2">Parent No</th>
-            <th className="border px-4 py-2">Address</th>
-            <th className="border px-4 py-2">Admission Date</th>
+            {role == "Staff" && (
+              <>
+                <th className="border px-4 py-2">Parent Name</th>
+                <th className="border px-4 py-2">Parent No</th>
+                <th className="border px-4 py-2">Address</th>
+                <th className="border px-4 py-2">Admission Date</th>
+              </>
+            )}
             <th className="border px-4 py-2">Floor No</th>
             <th className="border px-4 py-2">Room No</th>
           </tr>
@@ -196,10 +204,15 @@ const Stdpg = () => {
               <td className="border px-4 py-2">{std.dob}</td>
               <td className="border px-4 py-2">{std.contactnum}</td>
               <td className="border px-4 py-2">{std.email}</td>
-              <td className="border px-4 py-2">{std.parentname}</td>
-              <td className="border px-4 py-2">{std.parentnum}</td>
-              <td className="border px-4 py-2">{std.address}</td>
-              <td className="border px-4 py-2">{std.admissiondate}</td>
+              {role == "Staff" && (
+                <>
+                  <td className="border px-4 py-2">{std.parentname}</td>
+                  <td className="border px-4 py-2">{std.parentnum}</td>
+                  <td className="border px-4 py-2">{std.address}</td>
+                  <td className="border px-4 py-2">{std.admissiondate}</td>
+                </>
+              )}
+
               <td className="border px-4 py-2">{std.floornum}</td>
               <td className="border px-4 py-2">{std.roomnum}</td>
             </tr>
@@ -306,7 +319,7 @@ const Stdpg = () => {
                       type="date"
                       value={stdData.admissiondate}
                       onChange={handleChange}
-                      className="border p-1 ml-5 w-max"
+                      className="border p-1 ml-5"
                     />
                   </h1>
                 </div>

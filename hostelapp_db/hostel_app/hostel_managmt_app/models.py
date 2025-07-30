@@ -72,7 +72,20 @@ class VisitorItem(models.Model):
     def __str__(self):
         return f"{self.visitorname} visiting student {self.std.name}"
     
-
+    
+class StaffItem(models.Model):
+    staffid = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=50)
+    contactnum = models.BigIntegerField()
+    email = models.EmailField()
+    salary = models.IntegerField()
+    joindate = models.DateField()   
+    
+    def __str__(self):
+        return f"{self.name} role {self.role}"
+    
+    
 class OutPassItem(models.Model):
     outpassid = models.AutoField(primary_key=True)
     std = models.ForeignKey(StudentItem, on_delete=models.CASCADE)
@@ -80,25 +93,13 @@ class OutPassItem(models.Model):
     whereto = models.CharField(max_length=50)
     outat = models.DateTimeField()
     innat = models.DateTimeField()
-    approvedby = models.ForeignKey('StaffItem', on_delete=models.SET_NULL, null=True)
+    approvedby = models.ForeignKey(StaffItem, on_delete=models.SET_NULL, null=True)
     status = models.BooleanField(default=False)
     
     def __str__(self):
         approved_name = self.approvedby.name if self.approvedby else "Pending"
-        return f"OutPass id{self.outpassid} - {self.std.name} for {self.reason}, approved by {approved_name}"
+        return f"OutPass id{self.outpassid} - {self.std.name} for {self.reason}, approved by {approved_name}"   
     
-    
-class StaffItem(models.Model):
-    staffid = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    role = models.CharField(max_length=50)
-    contactnum = models.IntegerField()
-    email = models.EmailField()
-    salary = models.IntegerField()
-    joindate = models.DateField()
-    
-    def __str__(self):
-        return f"{self.name} role {self.role}"
 
 class StudentLog(models.Model):
     email = models.ForeignKey(StudentItem, on_delete=models.CASCADE)

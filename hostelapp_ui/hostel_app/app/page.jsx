@@ -6,8 +6,8 @@ import Logpg from "./login/page";
 export default function Home() {
   return (
     <div>
-      {/* <Logpg/> */}
-      <Homepg/>
+      {/* <Logpg /> */}
+      <Homepg />
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import api, { endpoints } from "@/lib/api";
+import authStore from "@/public/store/authStore";
 
 const Logpg = () => {
   const router = useRouter();
@@ -14,6 +15,8 @@ const Logpg = () => {
   const [existinguser, setexistinguse] = useState(true);
   const [newUser, setnewUser] = useState(false);
 
+  const { setUser } = authStore();
+
   const login = async (e) => {
     e.preventDefault();
     setStatus("");
@@ -25,9 +28,9 @@ const Logpg = () => {
       const data = res.data;
       console.log("Login response headers:", res.headers);
 
+      setUser({ id: data.id, role: data.role, email });
       setStatus(`Login successful. Role: ${data.role}`);
       setTimeout(() => router.push("/home"), 1000);
-
     } catch (err) {
       // console.error("Login error:", err);
       console.error("Login error:", err.response?.data || err);
@@ -50,16 +53,20 @@ const Logpg = () => {
 
     try {
       const res = await api.post(endpoints.SetPassword, {
-        email,
+        email: newemail,
         password: newPassword,
       });
       console.log("Login response headers:", res.headers);
 
       console.log("Response from backend:", res.data);
       console.log("Success:", res.data);
-      const data = res.data;
-      setStatus(`Password set. Redirecting... ${res.data.role}`);
-      setTimeout(() => router.push("/home"), 1000);
+      // const data = res.data;
+      setStatus(`Password set seccessfully. ${res.data.role}`);
+      // setTimeout(() => router.push("/home"), 1000);
+      alert("New User Password is Set");
+      setexistinguse(true);
+      setnewUser(false);
+      setPassword([""])
     } catch (err) {
       console.error("ERROR:", err);
       setStatus(err.response?.data?.error || "Failed to set password");
@@ -108,7 +115,7 @@ const Logpg = () => {
               >
                 {loading ? "Logging in..." : "Log In"}
               </button>
-              <div className="">
+              <div className="text-black hover:font-semibold hover:underline hover:text-red-600">
                 <button onClick={newUserPnl}>New User?</button>
               </div>
               {status && <p className="mt-4 text-sm text-red-600">{status}</p>}

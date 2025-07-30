@@ -35,8 +35,10 @@ class RoomSerializer(serializers.ModelSerializer):
         
 
 class VisitorSerializer(serializers.ModelSerializer):
-    std = StudentNestedSerializer(read_only=True)
-    
+    std_id = serializers.PrimaryKeyRelatedField(
+        queryset=StudentItem.objects.all(), source='std', write_only=True
+    )
+    std = StudentNestedSerializer(read_only = True)    
     class Meta:
         model = VisitorItem
         fields = '__all__'
@@ -49,8 +51,19 @@ class StaffNestedSerializer(serializers.ModelSerializer):
 
 
 class OutPassSerializer(serializers.ModelSerializer):
+    std_id = serializers.PrimaryKeyRelatedField(
+        queryset=StudentItem.objects.all(), source='std', write_only=True
+    )
     std = StudentNestedSerializer(read_only=True)
+    
+    approvedby_id = serializers.PrimaryKeyRelatedField(
+        queryset=StaffItem.objects.all(), source='approvedby', write_only=True, allow_null=True, required=False
+    )
     approvedby = StaffNestedSerializer(read_only=True)
+    # std = serializers.PrimaryKeyRelatedField(queryset=StudentItem.objects.all())
+    # approvedby = serializers.PrimaryKeyRelatedField(
+    #     queryset=StaffItem.objects.all(), required=False, allow_null=True
+    # )
     
     class Meta:
         model = OutPassItem
